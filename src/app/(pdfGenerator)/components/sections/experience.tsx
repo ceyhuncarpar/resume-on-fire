@@ -6,9 +6,13 @@ import { Input } from '@/components/input'
 import { Dropdown } from '@/components/dropdown'
 import { MonthProps, months } from '@/lib/constants/montsAndDates'
 import { IconButton } from '@/components/iconButton'
+import { AddFieldButton } from '../addFieldButton'
+import { Icon } from '@/components/icon'
+import { AddSectionButton } from '../addSectionButton'
+import { cn } from '@/lib/utils'
 
 export default function Experience() {
-	const { addExperience, updateArrayItem, experience } = useResumeBuilder()
+	const { addExperience, updateArrayItem, deleteArrayItem, experience } = useResumeBuilder()
 	const yearOptions = useMemo(() => {
 		const start = 1950
 		const end = 2025
@@ -56,10 +60,22 @@ export default function Experience() {
 		<React.Fragment>
 			<div className='space-y-4'>
 				{experience.map((exp, i) => (
-					<div key={i} className='space-y-2'>
-						<Text variant='subTitle' className='mt-4'>
-							Education field {i+1}
-						</Text>
+					<div key={i} className='space-y-4'>
+						<div className={cn(
+							'flex items-center justify-between gap-2',
+							i !== 0 ? 'mt-8' : ''
+						)}>
+							<Text variant='subTitle'>
+								Experience {i+1}
+							</Text>
+
+							<IconButton 
+								variant='secondary'
+								size='small'
+								iconType='trash'
+								onClick={() => deleteArrayItem('experience', i)}
+							/>
+						</div>
 
 						<Input 
 							label='Company'
@@ -104,46 +120,46 @@ export default function Experience() {
 								</div>
 							))}
 
-							<Button 
+							<AddFieldButton 
 								text='Add achievement'
-								onClick={() => addAchievement(i)}
+								onAdd={() => addAchievement(i)}
 							/>
-						</div>
 
-						<div className='flex gap-4'>
-							<div className='flex-col flex-1'>
-								<Text variant='label'>Start date</Text>
+							<div className='flex gap-4'>
+								<div className='flex-col flex-1'>
+									<Text variant='label'>Start date</Text>
 
-								<div className='gap-2 flex flex-1 w-full'>
-									<Dropdown
-										options={months}
-										selected={experience[i].startMonth}
-										onChange={(data: MonthProps) => updateArrayItem('experience', i, { startMonth: data })}
-									/>
+									<div className='gap-2 flex flex-1 w-full'>
+										<Dropdown
+											options={months}
+											selected={experience[i].startMonth}
+											onChange={(data: MonthProps) => updateArrayItem('experience', i, { startMonth: data })}
+										/>
 
-									<Dropdown 
-										options={yearOptions}
-										selected={experience[i].startYear}
-										onChange={data => updateArrayItem('experience', i, { startYear: data })}
-									/>
+										<Dropdown 
+											options={yearOptions}
+											selected={experience[i].startYear}
+											onChange={data => updateArrayItem('experience', i, { startYear: data })}
+										/>
+									</div>
 								</div>
-							</div>
 
-							<div className='flex-col flex-1'>
-								<Text variant='label'>End date</Text>
+								<div className='flex-col flex-1'>
+									<Text variant='label'>End date</Text>
 
-								<div className='gap-2 flex flex-1 w-full'>
-									<Dropdown
-										options={months}
-										selected={experience[i].endMonth}
-										onChange={(data: MonthProps) => updateArrayItem('experience', i, { endMonth: data })}
-									/>
+									<div className='gap-2 flex flex-1 w-full'>
+										<Dropdown
+											options={months}
+											selected={experience[i].endMonth}
+											onChange={(data: MonthProps) => updateArrayItem('experience', i, { endMonth: data })}
+										/>
 
-									<Dropdown 
-										options={yearOptions}
-										selected={experience[i].endYear}
-										onChange={data => updateArrayItem('experience', i, { endYear: data })}
-									/>
+										<Dropdown 
+											options={yearOptions}
+											selected={experience[i].endYear}
+											onChange={data => updateArrayItem('experience', i, { endYear: data })}
+										/>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -151,9 +167,10 @@ export default function Experience() {
 				))}
 			</div>
 
-			<Button 
+			<AddSectionButton 
+				className={!experience.length ? 'mt-[-32px]' : ''}
 				text='Add experience'
-				onClick={addExperience}
+				onAdd={addExperience}
 			/>
 		</React.Fragment>
 	)

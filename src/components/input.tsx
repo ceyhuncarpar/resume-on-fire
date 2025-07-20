@@ -4,7 +4,7 @@ import React, { forwardRef } from 'react'
 import { Text } from './text';
 
 const input = cva(
-  'rounded-md border bg-[#fafafa] py-2 px-2 outline-black text-[14px]',
+  'rounded-sm border bg-[#fafafa] py-2 px-2 outline-black text-[14px]',
   {
     variants: {
       variant: {
@@ -27,7 +27,7 @@ export interface InputProps
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ variant = 'primary', className, label, ...rest }, ref) => {
     return (
-      <div className={cn({ className }, 'w-full')}>
+      <div className={cn('w-full', className )}>
         {label && <Text variant='label' className='mb-[2px]'>{label}</Text>}
         <input
           ref={ref}

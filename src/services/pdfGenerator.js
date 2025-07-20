@@ -40,9 +40,6 @@ export class PDFGenerator {
 	 */
 	async generate(documentData) {
 		console.log('Generating document')
-		// console.log('---------------------------------------------------------------------------------')
-		// console.log('document data', documentData)
-		// console.log('---------------------------------------------------------------------------------')
 		await this.initialize()
 
 		// Iterate over keys of data, and generate fire the right function.
@@ -79,7 +76,8 @@ export class PDFGenerator {
 			}
 		})
 
-		this.writeAndCompleteDocument()
+		
+		return await this.writeAndCompleteDocument()
 	}
 
 	/**
@@ -173,7 +171,7 @@ export class PDFGenerator {
 
 		// Iterate over info keys and add continued text with dashes in between.
 		keys.forEach((key, i) => {
-			const value = data[key]
+			const value = data[key].value
 			const isLast = keys.length === i + 1
 			if(!value) return
 
@@ -330,17 +328,17 @@ export class PDFGenerator {
 		})
 	}
 
-	writeAndCompleteDocument() {
-		this.pdf.end()
-		console.log('Completing document')
-		
-		this.stream.on('finish', () => {
-			const url = this.stream.toBlobURL('application/pdf')
-			const elem = document.getElementById('resume-preview')
-			elem.src = url
-			this.stream = null
+	async writeAndCompleteDocument() {
+		return await new Promise(resolve => {
+			console.log('Completing document')
+			this.pdf.end()
+			
+			this.stream.on('finish', () => {
+				const url = this.stream.toBlobURL('application/pdf')
+				this.stream = null
+				
+				resolve(url)
+			})
 		})
-
-		this.pdf = null
 	}
 }

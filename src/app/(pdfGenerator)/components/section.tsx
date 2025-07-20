@@ -1,35 +1,37 @@
 import { Icon } from '@/components/icon'
 import { Text } from '@/components/text';
 import { cn } from '@/lib/utils'
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useState } from 'react'
+import { AddSectionButton } from './addSectionButton';
+import { useResumeBuilder } from '../provider';
+import { IconName } from 'lucide-react/dynamic';
 
 interface SectionProps {
 	children: ReactNode;
 	title: string; 
 	toggleOpen: (val: string) => void, activeSection: string;
+	icon?: IconName;
 }
 
 export function Section (
-	{ children, title, toggleOpen, activeSection }: SectionProps) 
+	{ children, title, toggleOpen, icon }: SectionProps) 
 {
-	const open = activeSection === title
-	
 	function handleOpen() {
 		toggleOpen(title)
 	}
-
+	
 	return (
 		<div 
 			onClick={handleOpen}
-			className={cn(['w-full rounded-2xl transition-[max-height] duration-700 ease-in-out flex flex-col justify-center px-4 pb-4'])}
+			className={'w-full rounded-xl transition-[max-height] flex flex-col justify-center px-4 pb-4 pt-2 border-1'}
 		>	
-			<div className='h-[40px] w-full flex justify-between sticky top-0 bg-red-50 py-2'>
+			<div className='w-full items-center flex gap-2 sticky top-0 bg-red-50 py-2 mb-4'>
+				<Icon type={icon || 'pencil'} size={20} fill='transparent' />
 				<Text variant='title'>{title}</Text>
-
-				<Icon type='pencil' size={20} fill='transparent' />
+				
 			</div>
 			
-			<div className='flex flex-col space-y-[8px]'>
+			<div className='flex flex-col space-y-4'>
 				{children}
 			</div>
 		</div>		

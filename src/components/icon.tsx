@@ -17,7 +17,7 @@ export function Icon({ type, size = 24, color = '#000', margin, className, fill 
 			name={type} 
 			color={color} 
 			size={size} 
-			className={cn(margin && `margin-[${margin}]`, className)}
+			className={cn(className)}
 			fill={fill || 'transparent'}
 		/>
 	)

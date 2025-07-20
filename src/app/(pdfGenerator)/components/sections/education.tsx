@@ -7,9 +7,12 @@ import { Text } from '@/components/text'
 import { graduationTypes } from '@/lib/constants/graduationTypes'
 import { GraduationTypeProps } from '@/types/resume'
 import { type MonthProps, months } from '@/lib/constants/montsAndDates'
+import { IconButton } from '@/components/iconButton'
+import { AddSectionButton } from '../addSectionButton'
+import { cn } from '@/lib/utils'
 
 export default function Education() {
-	const { addEducation, updateArrayItem, education } = useResumeBuilder()
+	const { addEducation, updateArrayItem, deleteArrayItem, education } = useResumeBuilder()
 	const yearOptions = useMemo(() => {
 		const start = 1950
 		const end = 2030
@@ -25,10 +28,22 @@ export default function Education() {
 		<React.Fragment>
 			<div className='space-y-4'>
 				{education.map((edu, i) => (
-					<div key={i} className='space-y-2'>
-						<Text variant='subTitle' className='mt-4'>
-							Education field {i+1}
-						</Text>
+					<div key={i} className='space-y-4'>
+						<div className={cn(
+							'flex items-center justify-between gap-2',
+							i !== 0 ? 'mt-8' : ''
+						)}>
+							<Text variant='subTitle'>
+								Education {i+1}
+							</Text>
+
+							<IconButton 
+								variant='secondary'
+								size='small'
+								iconType='trash'
+								onClick={() => deleteArrayItem('education', i)}
+							/>
+						</div>
 
 						<Input 
 							label='School'
@@ -69,11 +84,13 @@ export default function Education() {
 
 							<div className='gap-4 flex w-full'>
 								<Dropdown
+									placeholder='Month'
 									options={months}
 									selected={education[i].gradMonth}
 									onChange={(data: MonthProps) => updateArrayItem('education', i, { gradMonth: data })}
 								/>
 								<Dropdown  
+									placeholder='Year'
 									options={yearOptions}
 									selected={education[i].gradYear}
 									onChange={(data: MonthProps) => updateArrayItem('education', i, { gradYear: data })}
@@ -84,9 +101,10 @@ export default function Education() {
 				))}
 			</div>
 
-			<Button 
-				text='Add education' 
-				onClick={addEducation}
+			<AddSectionButton
+				className={!education.length ? 'mt-[-32px]' : ''}
+				text='Add education'
+				onAdd={addEducation}
 			/>
 		</React.Fragment>
 	)

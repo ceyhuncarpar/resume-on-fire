@@ -3,19 +3,19 @@
 import { ResumeBuilderProvider } from './provider'
 import { Builder } from  './components/builder'
 import { Preview } from './components/preview'
-import { Dropdown } from '@/components/dropdown'
-	const options = [
-		{ value: 'selam', label: 'helo' },
-		{ value: 'selam', label: 'helo' },
-		{ value: 'selam', label: 'helo' }
-	]
+import { cn } from '@/lib/utils'
+import { MobilePreview } from './components/mobilePreview'
 
 export default function Home() {
   return (
     <ResumeBuilderProvider>
-      <div className='w-full h-full flex'>
+      <div className={cn([
+        'w-full flex flex-col',
+        'md:flex-row'
+      ])}>
         <Builder />
         <Preview />
+        <MobilePreview />
       </div>
     </ResumeBuilderProvider>
   )

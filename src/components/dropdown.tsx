@@ -100,10 +100,10 @@ export const Dropdown: React.FC<DropdownProps> = ({
 				disabled={disabled}
 				className={cn(dropdown({ variant, disabled, className }))}
 			>
-				<div className='w-full relative'>
+				<div className='w-full flex justify-between'>
 					<p className='text-start'>{selectedOption?.value || placeholder || 'Select...'}</p>
 
-					<div className='flex h-full items-center justify-center absolute right-0 top-0'>
+					<div className='flex h-full items-center justify-center'>
 						<Icon
 							type='chevron-down'
 							size={20}

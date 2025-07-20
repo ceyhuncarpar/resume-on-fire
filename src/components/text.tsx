@@ -11,7 +11,6 @@ const text = cva(
 				primary: 'text-[14px]',
 				subTitle: 'font-medium text-[16px]',
 				title: 'font-medium text-[18px]',
-				
 			},
 		},
 	}

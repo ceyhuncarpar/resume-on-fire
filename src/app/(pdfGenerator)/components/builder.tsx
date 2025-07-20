@@ -1,62 +1,35 @@
 import { useState } from 'react'
 import { Section } from './section'
 import { Education, PersonalInformation, Summary, Experience, Skills } from './sections'
-import { Button } from '@/components/button'
-import { useResumeBuilder } from '../provider'
+import { IconName } from 'lucide-react/dynamic'
+import { cn } from '@/lib/utils'
+
+const sections: { title: string, icon?: IconName, Component: React.FC }[] = [
+	{ title: 'Personal information', icon: 'user', Component: PersonalInformation },
+	{ title: 'Professional summary', icon: 'book-text', Component: Summary },
+	{ title: 'Education', icon: 'graduation-cap', Component: Education },
+	{ title: 'Work experience', icon: 'briefcase-business', Component: Experience },
+	{ title: 'Skills', icon: 'lightbulb', Component: Skills }
+]
 
 export function Builder() {
 	const [activeSection, setActiveSection] = useState<string>('Personal information')
-	const { generate } = useResumeBuilder()
 	
 	return (
-		<div className='w-[50%] h-full p-6 bg-red-50 flex flex-col space-y-2'>
-			<div className='w-full max-h-full border-b-cyan-600 border-2 rounded-2xl'>
+		<div className={cn(
+			'p-4 bg-red-50 flex flex-col space-y-6 mb-10',
+			'md:flex-1 md:p-6 md:mb-0'
+		)}>
+			{sections.map((section) => (
 				<Section 
-					title='Personal information'
+					key={section.title}
 					activeSection={activeSection}
 					toggleOpen={setActiveSection}
+					{...section}
 				>
-					<PersonalInformation />
+					<section.Component />
 				</Section>
-
-				<Section 
-					title='Professional summary'
-					activeSection={activeSection}
-					toggleOpen={setActiveSection}
-				>
-					<Summary />
-				</Section>
-
-				<Section 
-					title='Education'
-					activeSection={activeSection}
-					toggleOpen={setActiveSection}
-				>
-					<Education />
-				</Section>
-
-				<Section 
-					title='Work experience'
-					activeSection={activeSection}
-					toggleOpen={setActiveSection}
-				>
-					<Experience />
-				</Section>
-
-				<Section 
-					title='Skills'
-					activeSection={activeSection}
-					toggleOpen={setActiveSection}
-				>
-					<Skills />
-				</Section>
-			</div>
-
-			<Button 
-				className='sticky bottom-6'
-				text='Generate'
-				onClick={generate}
-			/>
+			))}
 		</div>
 	)
 }
