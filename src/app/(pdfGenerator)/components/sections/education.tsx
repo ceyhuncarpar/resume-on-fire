@@ -2,7 +2,6 @@ import React, { useMemo } from 'react'
 import { useResumeBuilder } from '../../provider'
 import { Input } from '@/components/input'
 import { Dropdown } from '@/components/dropdown'
-import { Button } from '@/components/button'
 import { Text } from '@/components/text'
 import { graduationTypes } from '@/lib/constants/graduationTypes'
 import { GraduationTypeProps } from '@/types/resume'
@@ -16,7 +15,7 @@ export default function Education() {
 	const yearOptions = useMemo(() => {
 		const start = 1950
 		const end = 2030
-		let arr = []
+		const arr = []
 		for(let i = start; i <= end; i++) {
 			arr.unshift({ value: i.toString(), label: i.toString() })
 		}

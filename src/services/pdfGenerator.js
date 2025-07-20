@@ -1,5 +1,3 @@
-'use client'
-
 import PDFKit from '@react-pdf/pdfkit'
 import blobStream from 'blob-stream'
 
@@ -207,7 +205,7 @@ export class PDFGenerator {
 				text, 
 				this.margins.left, 
 				this.pdf.y + 12, 
-				{ align: 'justify', width: this.realW - 24}
+				{ align: 'justify', width: this.realW - 24 }
 			)
 	}
 
@@ -314,7 +312,7 @@ export class PDFGenerator {
 				.text(`${data.label}: `, this.pdf.x, topPos, { continued: true, align: 'justify' })
 			this.pdf
 				.font('Rubik-Regular.ttf')
-				.text(data.value, { continued: false })
+				.text(data.value, { continued: false, width: this.realW - 24 })
 			// data.data.forEach((skill, i) => {
 			// 	const isLast = data.data.length === i + 1
 			// 	this.pdf

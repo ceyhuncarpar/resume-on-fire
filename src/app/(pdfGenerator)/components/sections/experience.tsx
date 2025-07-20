@@ -16,7 +16,7 @@ export default function Experience() {
 	const yearOptions = useMemo(() => {
 		const start = 1950
 		const end = 2025
-		let arr = []
+		const arr = []
 		for(let i = start; i <= end; i++) {
 			arr.unshift({ value: i.toString(), label: i.toString() })
 		}
